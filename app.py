@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, send_file
 import requests
 import pandas as pd
 import time
+import gunicorn
 import os
 
 app = Flask(__name__)
