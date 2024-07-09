@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consulta de Chats</title>
+</head>
+<body>
+    <h1>Consulta de Chats</h1>
+    <form action="/get_chats" method="post">
+        <label for="company_id">ID da Empresa:</label>
+        <input type="text" id="company_id" name="company_id"><br><br>
+        <label for="bearer_token">Bearer Token:</label>
+        <input type="text" id="bearer_token" name="bearer_token"><br><br>
+        <label for="start_date">Data de Início:</label>
+        <input type="date" id="start_date" name="start_date"><br><br>
+        <label for="end_date">Data de Término:</label>
+        <input type="date" id="end_date" name="end_date"><br><br>
+        <input type="submit" value="Consultar">
+    </form>
+</body>
+</html>
