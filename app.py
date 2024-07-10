@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, send_file
 import requests
 import pandas as pd
 import time
-import gunicorn
 import os
 
 app = Flask(__name__)
@@ -52,10 +51,12 @@ def get_chats():
 
     df = pd.DataFrame(all_chats)
 
+    # Filtrar os chats pelo período especificado
     df['createdAt'] = pd.to_datetime(df['createdAt'], errors='coerce').dt.date
     filtered_chats_df = df[(df['createdAt'] >= start_date) & (df['createdAt'] <= end_date)]
     chat_ids = filtered_chats_df['id'].tolist()
 
+    # Recuperar mensagens correspondentes aos chats filtrados
     base_url_messages = f"https://api.huggy.app/v3/companies/{company_id}/chats/{{id}}/messages"
     all_messages = []
 
@@ -73,7 +74,7 @@ def get_chats():
         time.sleep(0.2)
 
     messages_df = pd.DataFrame(all_messages)
-    output_filename_messages = ".venv/chat_messages.xlsx"
+    output_filename_messages = "chat_messages.xlsx"
     messages_df.to_excel(output_filename_messages, index=False)
 
     return redirect(url_for('download_file', filename=output_filename_messages))
