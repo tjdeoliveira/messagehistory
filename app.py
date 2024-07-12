@@ -24,7 +24,9 @@ def get_chats():
     base_url = f"https://api.huggy.app/v3/companies/{company_id}/chats/"
 
     params = {
-        "page": 0
+        "page": 0,
+        "created_at_from": start_date,
+        "created_at_to": end_date
     }
 
     headers = {
@@ -52,12 +54,9 @@ def get_chats():
 
     df = pd.DataFrame(all_chats)
 
-    # Filtrar os chats pelo período especificado
     df['createdAt'] = pd.to_datetime(df['createdAt'], errors='coerce').dt.date
-    filtered_chats_df = df[(df['createdAt'] >= start_date) & (df['createdAt'] <= end_date)]
-    chat_ids = filtered_chats_df['id'].tolist()
+    chat_ids = df['id'].tolist()
 
-    # Recuperar mensagens correspondentes aos chats filtrados
     base_url_messages = f"https://api.huggy.app/v3/companies/{company_id}/chats/{{id}}/messages"
     all_messages = []
 

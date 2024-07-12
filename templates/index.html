@@ -2,18 +2,36 @@
 <html>
 <head>
     <title>Consulta de Chats</title>
+    <script>
+        function validateDateRange() {
+            var startDate = new Date(document.getElementById("start_date").value);
+            var endDate = new Date(document.getElementById("end_date").value);
+            var timeDiff = endDate - startDate;
+            var dayDiff = timeDiff / (1000 * 3600 * 24);
+            console.log("Start Date:", startDate);
+            console.log("End Date:", endDate);
+            console.log("Time Difference (ms):", timeDiff);
+            console.log("Day Difference:", dayDiff);
+            if (dayDiff > 30) {
+                alert("O intervalo entre as datas não pode ser superior a 30 dias.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 <body>
     <h1>Consulta de Chats</h1>
-    <form action="/get_chats" method="post">
+    <form action="/get_chats" method="post" onsubmit="return validateDateRange()">
         <label for="company_id">ID da Empresa:</label>
-        <input type="text" id="company_id" name="company_id"><br><br>
+        <input type="text" id="company_id" name="company_id" required><br><br>
         <label for="bearer_token">Bearer Token:</label>
-        <input type="text" id="bearer_token" name="bearer_token"><br><br>
+        <input type="text" id="bearer_token" name="bearer_token" required><br><br>
         <label for="start_date">Data de Início:</label>
-        <input type="date" id="start_date" name="start_date"><br><br>
+        <input type="date" id="start_date" name="start_date" required><br><br>
         <label for="end_date">Data de Término:</label>
-        <input type="date" id="end_date" name="end_date"><br><br>
+        <input type="date" id="end_date" name="end_date" required><br><br>
         <input type="submit" value="Consultar">
     </form>
 </body>
